@@ -2,6 +2,10 @@
 name = "typevec"
 version = "0.1.0"
 authors = ["sinhrks <sinhrks@gmail.com>"]
+repository = "https://github.com/sinhrks/rust-typevec"
+license-file = "LICENSE"
+readme = "README.md"
+description = "Rust Vec which can contain arbitrary types"
 
 [dependencies]
-unsafe-any = "*"
+unsafe-any = "0.4.1"
