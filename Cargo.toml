@@ -1,0 +1,7 @@
+[package]
+name = "typevec"
+version = "0.1.0"
+authors = ["sinhrks <sinhrks@gmail.com>"]
+
+[dependencies]
+unsafe-any = "*"
