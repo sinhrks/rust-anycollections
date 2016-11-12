@@ -1,6 +1,6 @@
 # typevec
 
-Rust Vec which can contains arbitrary types inrernally casts inputs to ``Box<UnsafeAny>``.
+Rust Vec which can contain arbitrary types inrernally casts inputs to ``Box<UnsafeAny>``.
 
 ```rust
 let mut v = TypeVec::new();

@@ -1,4 +1,4 @@
-//! Rust Vec which can contains arbitrary types inrernally casts inputs to ``Box<UnsafeAny>``.
+//! Rust Vec which can contain arbitrary types inrernally casts inputs to ``Box<UnsafeAny>``.
 
 extern crate unsafe_any as uany;
 use uany::{UnsafeAny, UnsafeAnyExt};
@@ -18,11 +18,31 @@ pub struct TypeVec<A: ?Sized = UnsafeAny> where A: UnsafeAnyExt {
     pub data: Vec<Box<A>>,
 }
 
-/// Vec which can contains arbitrary types.
+/// Vec which can contain arbitrary types.
 impl TypeVec {
 
     pub fn new() -> Self {
         TypeVec { data: vec![] }
+    }
+
+    pub fn with_capacity(capacity: usize) -> Self {
+        TypeVec { data: Vec::with_capacity(capacity) }
+    }
+
+    pub fn capacity(&self) -> usize {
+        self.data.capacity()
+    }
+
+    pub fn reserve(&mut self, additional: usize) {
+        self.data.reserve(additional)
+    }
+
+    pub fn reserve_exact(&mut self, additional: usize) {
+        self.data.reserve_exact(additional)
+    }
+
+    pub fn shrink_to_fit(&mut self) {
+        self.data.shrink_to_fit();
     }
 
     pub fn clear(&mut self) {
@@ -109,6 +129,24 @@ mod tests {
         assert_eq!(v.pop::<&str>(), Some("xxx"));
         assert_eq!(v.pop::<f64>(), Some(2.2));
         assert_eq!(v.pop::<i32>(), Some(1));
+    }
+
+    #[test]
+    fn test_capacity() {
+        let mut v = TypeVec::with_capacity(50);
+        assert_eq!(v.capacity(), 50);
+
+        v.reserve(10);
+        assert!(v.capacity() >= 50);
+
+        let mut v2 = TypeVec::new();
+        v2.push(1);
+
+        v2.reserve_exact(100);
+        assert!(v2.capacity() >= 101);
+
+        v2.shrink_to_fit();
+        assert!(v2.capacity() < 100);
     }
 
     #[test]
