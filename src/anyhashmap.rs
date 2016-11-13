@@ -80,6 +80,29 @@ mod tests {
     use super::AnyHashMap;
 
     #[test]
+    fn test_readme() {
+        // example on readme
+
+        // Only to specify key type to create AnyHashMap
+        let mut m: AnyHashMap<i32> = AnyHashMap::new();
+        m.insert(10, 10);
+        m.insert(20, 22.2);
+        m.insert(30, "xxx");
+        m.insert(40, vec![1, 2, 3]);
+
+        // Give type hint to specify return type.
+        assert_eq!(m.get::<i32>(&10), Some(&10));
+        assert_eq!(m.get::<f64>(&20), Some(&22.2));
+        assert_eq!(m.get::<&str>(&30), Some(&"xxx"));
+        assert_eq!(m.get::<Vec<i32>>(&40), Some(&vec![1, 2, 3]));
+
+        assert_eq!(m.get_mut::<i32>(&10), Some(&mut 10));
+        assert_eq!(m.get_mut::<f64>(&20), Some(&mut 22.2));
+        assert_eq!(m.get_mut::<&str>(&30), Some(&mut "xxx"));
+        assert_eq!(m.get_mut::<Vec<i32>>(&40), Some(&mut vec![1, 2, 3]));
+    }
+
+    #[test]
     fn test_capacity() {
         let mut m: AnyHashMap<i32> = AnyHashMap::with_capacity(50);
         assert!(m.capacity() >= 50);
@@ -95,7 +118,6 @@ mod tests {
 
     #[test]
     fn test_numeric() {
-        // AnyHashMap //
         let mut m: AnyHashMap<i32> = AnyHashMap::new();
         let res = m.insert(1, 10);
         assert_eq!(res, None);
@@ -122,4 +144,3 @@ mod tests {
         assert_eq!(m.get_mut::<&str>(&3), Some(&mut "xxx"));
     }
 }
-

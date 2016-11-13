@@ -2,10 +2,10 @@
 name = "anycollections"
 version = "0.1.0"
 authors = ["sinhrks <sinhrks@gmail.com>"]
-repository = "https://github.com/sinhrks/rust-typevec"
+repository = "https://github.com/sinhrks/rust-anycollections"
 license = "BSD-3-Clause"
 readme = "README.md"
-description = "Rust Vec which can contain arbitrary types"
+description = "Rust Vec and HashMap which can contain arbitrary types"
 keywords = [ "vec", "hashmap", "any" ]
 
 [dependencies]
