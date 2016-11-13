@@ -8,7 +8,7 @@ Rust ``Vec`` and ``HashMap`` which can contain arbitrary types inrernally casts 
 extern crate anycollections;
 use anycollections::AnyVec;
 
-let mut v = TypeVec::new();
+let mut v = AnyVec::new();
 assert!(v.is_empty());
 
 // Can push whatever values.
