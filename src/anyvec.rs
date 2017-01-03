@@ -6,13 +6,14 @@ use std::any::Any;
 
 use cast::AsAny;
 
-pub struct AnyVec<A: ?Sized = UnsafeAny> where A: UnsafeAnyExt {
+pub struct AnyVec<A: ?Sized = UnsafeAny>
+    where A: UnsafeAnyExt
+{
     pub data: Vec<Box<A>>,
 }
 
 /// Vec which can contain arbitrary types.
 impl AnyVec {
-
     pub fn new() -> Self {
         AnyVec { data: vec![] }
     }
@@ -48,39 +49,34 @@ impl AnyVec {
     pub fn is_empty(&mut self) -> bool {
         self.data.is_empty()
     }
-
 }
 
 
 impl<A: UnsafeAnyExt + ?Sized> AnyVec<A> {
-
-    pub fn insert<T>(&mut self, index: usize, element: T) where T: Any + AsAny<A> {
+    pub fn insert<T>(&mut self, index: usize, element: T)
+        where T: Any + AsAny<A>
+    {
         self.data.insert(index, element.asany());
     }
 
     pub fn get<T: Any>(&self, index: usize) -> Option<&T> {
-        self.data.get(index).map(|v| unsafe {
-            v.downcast_ref_unchecked::<T>()
-        })
+        self.data.get(index).map(|v| unsafe { v.downcast_ref_unchecked::<T>() })
     }
 
     pub fn get_mut<T: Any>(&mut self, index: usize) -> Option<&mut T> {
-        self.data.get_mut(index).map(|mut v| unsafe {
-            v.downcast_mut_unchecked::<T>()
-        })
+        self.data.get_mut(index).map(|mut v| unsafe { v.downcast_mut_unchecked::<T>() })
     }
 
-    pub fn push<T>(&mut self, value: T) where T: Any + AsAny<A> {
+    pub fn push<T>(&mut self, value: T)
+        where T: Any + AsAny<A>
+    {
         self.data.push(value.asany());
     }
 
 
     pub fn pop<T: Any>(&mut self) -> Option<T> {
-        self.data.pop().map(move |v| unsafe {
-            *v.downcast_unchecked::<T>()
-        })
+        self.data.pop().map(move |v| unsafe { *v.downcast_unchecked::<T>() })
     }
-
 }
 
 #[cfg(test)]

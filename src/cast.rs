@@ -7,5 +7,7 @@ pub unsafe trait AsAny<A: ?Sized + UnsafeAnyExt> {
 }
 
 unsafe impl<T: UnsafeAny> AsAny<UnsafeAny> for T {
-    fn asany(self) -> Box<UnsafeAny> { Box::new(self) }
+    fn asany(self) -> Box<UnsafeAny> {
+        Box::new(self)
+    }
 }

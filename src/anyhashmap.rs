@@ -8,13 +8,14 @@ use std::hash::Hash;
 
 use cast::AsAny;
 
-pub struct AnyHashMap<K: Hash + Eq, A: ?Sized = UnsafeAny> where A: UnsafeAnyExt {
+pub struct AnyHashMap<K: Hash + Eq, A: ?Sized = UnsafeAny>
+    where A: UnsafeAnyExt
+{
     pub data: HashMap<K, Box<A>>,
 }
 
 /// HashMap which can contain arbitrary types.
 impl<K: Hash + Eq> AnyHashMap<K> {
-
     pub fn new() -> Self {
         AnyHashMap { data: HashMap::new() }
     }
@@ -46,31 +47,29 @@ impl<K: Hash + Eq> AnyHashMap<K> {
     pub fn is_empty(&mut self) -> bool {
         self.data.is_empty()
     }
-
 }
 
 impl<K: Hash + Eq, A: UnsafeAnyExt + ?Sized> AnyHashMap<K, A> {
-
-    pub fn get<V>(&self, k: &K) -> Option<&V> where V: Any + AsAny<A> {
-        self.data.get(k).map(|v| unsafe {
-            v.downcast_ref_unchecked::<V>()
-        })
+    pub fn get<V>(&self, k: &K) -> Option<&V>
+        where V: Any + AsAny<A>
+    {
+        self.data.get(k).map(|v| unsafe { v.downcast_ref_unchecked::<V>() })
     }
 
     pub fn contains_key(&self, k: &K) -> bool {
         self.data.contains_key(k)
     }
 
-    pub fn get_mut<V>(&mut self, k: &K) -> Option<&mut V> where V: Any + AsAny<A> {
-        self.data.get_mut(k).map(|mut v| unsafe {
-            v.downcast_mut_unchecked::<V>()
-        })
+    pub fn get_mut<V>(&mut self, k: &K) -> Option<&mut V>
+        where V: Any + AsAny<A>
+    {
+        self.data.get_mut(k).map(|mut v| unsafe { v.downcast_mut_unchecked::<V>() })
     }
 
-    pub fn insert<V>(&mut self, k: K, v: V) -> Option<V> where V: Any + AsAny<A> {
-        self.data.insert(k, v.asany()).map(move |v| unsafe {
-            *v.downcast_unchecked::<V>()
-        })
+    pub fn insert<V>(&mut self, k: K, v: V) -> Option<V>
+        where V: Any + AsAny<A>
+    {
+        self.data.insert(k, v.asany()).map(move |v| unsafe { *v.downcast_unchecked::<V>() })
     }
 }
 
