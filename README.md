@@ -2,6 +2,11 @@
 
 Rust ``Vec`` and ``HashMap`` which can contain arbitrary types inrernally casts inputs to ``Box<UnsafeAny>``.
 
+[![Release](https://img.shields.io/crates/v/anycollections.svg)](https://crates.io/crates/anycollections)
+[![Documentation](https://docs.rs/anycollections/badge.svg)](https://docs.rs/anycollections/)
+[![Build Status](https://travis-ci.org/sinhrks/rust-anycollections.svg?branch=master)](https://travis-ci.org/sinhrks/rust-anycollections
+)
+
 ## AnyVec
 
 ```rust
