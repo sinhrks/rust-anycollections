@@ -9,7 +9,8 @@ use std::hash::Hash;
 use cast::AsAny;
 
 pub struct AnyHashMap<K: Hash + Eq, A: ?Sized = UnsafeAny>
-    where A: UnsafeAnyExt
+where
+    A: UnsafeAnyExt,
 {
     pub data: HashMap<K, Box<A>>,
 }
@@ -51,9 +52,12 @@ impl<K: Hash + Eq> AnyHashMap<K> {
 
 impl<K: Hash + Eq, A: UnsafeAnyExt + ?Sized> AnyHashMap<K, A> {
     pub fn get<V>(&self, k: &K) -> Option<&V>
-        where V: Any + AsAny<A>
+    where
+        V: Any + AsAny<A>,
     {
-        self.data.get(k).map(|v| unsafe { v.downcast_ref_unchecked::<V>() })
+        self.data.get(k).map(|v| unsafe {
+            v.downcast_ref_unchecked::<V>()
+        })
     }
 
     pub fn contains_key(&self, k: &K) -> bool {
@@ -61,15 +65,21 @@ impl<K: Hash + Eq, A: UnsafeAnyExt + ?Sized> AnyHashMap<K, A> {
     }
 
     pub fn get_mut<V>(&mut self, k: &K) -> Option<&mut V>
-        where V: Any + AsAny<A>
+    where
+        V: Any + AsAny<A>,
     {
-        self.data.get_mut(k).map(|mut v| unsafe { v.downcast_mut_unchecked::<V>() })
+        self.data.get_mut(k).map(|mut v| unsafe {
+            v.downcast_mut_unchecked::<V>()
+        })
     }
 
     pub fn insert<V>(&mut self, k: K, v: V) -> Option<V>
-        where V: Any + AsAny<A>
+    where
+        V: Any + AsAny<A>,
     {
-        self.data.insert(k, v.asany()).map(move |v| unsafe { *v.downcast_unchecked::<V>() })
+        self.data.insert(k, v.asany()).map(move |v| unsafe {
+            *v.downcast_unchecked::<V>()
+        })
     }
 }
 
